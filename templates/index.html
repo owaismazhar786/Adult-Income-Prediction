@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Income Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+                    background-color: #f8f9fa;
+                    background-image: url("{{ url_for('static', filename='img4.jpg') }}");
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    min-height: 100vh;
+                }
+        
+                .container {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                    margin-top: 100px;
+                }
+        
+                h2 {
+                    text-align: center;
+                    margin-bottom: 30px;
+                }
+        
+                .form-group label {
+                    font-weight: bold;
+                }
+        
+                button[type="submit"] {
+                    background-color: #007bff;
+                    border: none;
+                    color: #fff;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+        
+                button[type="submit"]:hover {
+                    background-color: #0069d9;
+                }
+            </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Income Prediction</h1>
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="age" title="Select the age of the person">Age:</label>
+                <input type="number" id="age" name="age" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="workclass" title="Select the workclass of the person">Workclass:</label>
+                <select class="form-control" id="workclass" name="workclass">
+                    <option value="2">Private</option>
+                    <option value="1">Local Government</option>
+                    <option value="4">Self Employed Not Incorporated</option>
+                    <option value="0">Federal Government</option>
+                    <option value="5">State Government</option>
+                    <option value="3">Self Employed Incorporated</option>
+                    <option value="6">Without Pay</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="fnlwgt" title="Select the final weight / sampling weight of the person">Final Weight:</label>
+                <input type="number" id="fnlwgt" name="fnlwgt" class="form-control" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="education" title="Select the education of the person">Education:</label>
+                <select class="form-control" id="education" name="education">
+                    <option value="1">11th</option>
+                    <option value="11">High School Graduation</option>
+                    <option value="7">Associate's degree</option>
+                    <option value="15">Some-College</option>
+                    <option value="0">10th</option>
+                    <option value="14">professional school</option>
+                    <option value="5">7th-8th</option>
+                    <option value="9">Bachelors</option>
+                    <option value="12">Masters</option>
+                    <option value="4">Doctorate</option>
+                    <option value="8">5th-6th</option>
+                    <option value="6">Associate's degree Vocational</option>
+                    <option value="10">9th</option>
+                    <option value="2">12th</option>
+                    <option value="3">1st-4th</option>
+                    <option value="13">PreSchool</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="educational_num" title="Select the educational_num of the person">Educational Number:</label>
+                <select class="form-control" id="educational_num" name="educational_num">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="marital_status" title="Select the marital_status of the person">Marital Status:</label>
+                <select class="form-control" id="marital_status" name="marital_status">
+                    <option value="4">Never Married</option>
+                    <option value="2">Married Civilians Spouse</option>
+                    <option value="6">Widowed</option>
+                    <option value="5">Separated</option>
+                    <option value="0">Divorced</option>
+                    <option value="3">Married Spouse Absent</option>
+                    <option value="1">Married Armed Forces Spouse</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="occupation" title="Select the occupation of the person">Occupation:</label>
+                <select class="form-control" id="occupation" name="occupation">
+                    <option value="6">Machine Operator and inspector</option>
+                    <option value="4">Farming Fishing</option>
+                    <option value="10">Protective Service</option>
+                    <option value="7">Other Service</option>
+                    <option value="9">Professional speciality</option>
+                    <option value="2">Craft Repair</option>
+                    <option value="0">Administrative Clerical</option>
+                    <option value="3">Executive Managerial</option>
+                    <option value="12">Technical Support</option>
+                    <option value="11">Sales</option>
+                    <option value="8">Private House Services</option>
+                    <option value="13">Transport Moving</option>
+                    <option value="5">Handlers and Cleaners</option>
+                    <option value="1">Armed Forces</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="relationship" title="Select the relationship of the person">Relationship:</label>
+                <select class="form-control" id="relationship" name="relationship">
+                    <option value="3">Own Child</option>
+                    <option value="0">Husband</option>
+                    <option value="5">Wife</option>
+                    <option value="4">Unmarried</option>
+                    <option value="1">Not In Family</option>
+                    <option value="2">Other Relative</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="race" title="Select the race of the person">Race:</label>
+                <select class="form-control" id="race" name="race">
+                    <option value="2">Black</option>
+                    <option value="4">White</option>
+                    <option value="3">Asian Pacific Islander</option>
+                    <option value="0">American Indian Eskimos</option>
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <label for="gender" title="Select the gender of the person">Gender:</label>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+            </div>
+    
+            <label for="capital_gain" title="Select the capital gain / profit of the person">Capital Gain:</label>
+            <input type="number" id="capital_gain" name="capital_gain" required><br>
+    
+            <label for="capital_loss" title="Select the Capital Loss / depreciation of the person">Capital Loss:</label>
+            <input type="number" id="capital_loss" name="capital_loss" required><br>
+    
+            <label for="hours_per_week" title="Select the Hours per Week of the person">Hours per Week:</label>
+            <input type="number" id="hours_per_week" name="hours_per_week" required><br>
+    
+            <div class="form-group">
+                <label for="native_country" title="Select the native_country of the person">Native Country:</label>
+                <select class="form-control" id="native_country" name="native_country">
+                    <option value="38">United States</option>
+                    <option value="28">Peru</option>
+                    <option value="12">Guatemala</option>
+                    <option value="25">Mexico</option>
+                    <option value="5">Dominican Republic</option>
+                    <option value="20">Ireland</option>
+                    <option value="10">Germany</option>
+                    <option value="29">Philippines</option>
+                    <option value="36">Thailand</option>
+                    <option value="13">Haiti</option>
+                    <option value="7">El Salvador</option>
+                    <option value="32">Puerto Rico</option>
+                    <option value="39">Vietnam</option>
+                    <option value="34">South</option>
+                    <option value="3">Colombia</option>
+                    <option value="23">Japan</option>
+                    <option value="18">India</option>
+                    <option value="0">Cambodia</option>
+                    <option value="30">Poland</option>
+                    <option value="24">Laos</option>
+                    <option value="8">England</option>
+                    <option value="4">Cuba</option>
+                    <option value="35">Taiwan</option>
+                    <option value="21">Italy</option>
+                    <option value="1">Canada</option>
+                    <option value="31">Portugal</option>
+                    <option value="2">China</option>
+                    <option value="26">Nicaragua</option>
+                    <option value="15">Honduras</option>
+                    <option value="19">Iran</option>
+                    <option value="33">Scotland</option>
+                    <option value="22">Jamaica</option>
+                    <option value="6">Ecuador</option>
+                    <option value="40">Yugoslavia</option>
+                    <option value="17">Hungary</option>
+                    <option value="16">Hong</option>
+                    <option value="11">Greece</option>
+                    <option value="37">Trinidad & Tobago</option>
+                    <option value="27">Outlying-US(Guam-USVI-etc)</option>
+                    <option value="9">France</option>
+                    <option value="14">Holand Netherlands</option>
+                </select>
+            </div>
+    
+            <input type="submit" class="btn btn-primary" value="Predict">
+        </form>
+    </div>
+</body>
+</html>
